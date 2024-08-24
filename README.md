@@ -1,88 +1,79 @@
-# JavaScript Deep Clone: Recursive and Non-recursive Approaches
+# Deep Clone Functions
 
-This repository contains two implementations of deep cloning in JavaScript: a recursive approach and a non-recursive approach. Both methods are thoroughly tested using Jest to ensure correctness across various scenarios.
+This project provides two implementations of a deep cloning function in JavaScript: a recursive approach and a non-recursive approach. Both functions are designed to create a deep copy of complex JavaScript objects, including handling of circular references and special object types.
 
-## Table of Contents
+## Features
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Deep Clone Implementations](#deep-clone-implementations)
-  - [Recursive Approach](#recursive-approach)
-  - [Non-recursive Approach](#non-recursive-approach)
-- [Running Jest Tests](#running-jest-tests)
-- [Test Coverage](#test-coverage)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Introduction
-
-Deep cloning is a technique used to create a fully independent copy of an object, including all nested objects and arrays. This repository explores two approaches to deep cloning: a simple recursive approach and a more complex non-recursive approach. Both methods are designed to handle various JavaScript data types, including special objects like `Date`, `RegExp`, `Map`, and `Set`.
-
-## Installation
-
-To get started, clone the repository and install the necessary dependencies:
-
-```bash
-git clone https://github.com/yourusername/deep-clone-js.git
-cd deep-clone-js
-npm install
-```
+- Supports cloning of:
+  - Primitive types
+  - Objects and Arrays
+  - Date objects
+  - RegExp objects
+  - Map and Set objects
+- Handles circular references
+- Preserves prototype chain
+- Clones non-enumerable properties
+- Supports Symbol keys
 
 ## Usage
 
-The main deep cloning functions are located in the `deepClone.js` file. You can import and use them in your project as follows:
+To use these functions in your project, import them from the `deepClone.js` file:
 
 ```javascript
 const { deepCloneRecursive, deepClone } = require('./deepClone');
-
-const original = { name: 'Alice', age: 30 };
-const copy = deepCloneRecursive(original); // or deepClone(original);
-
-console.log(copy); // { name: 'Alice', age: 30 }
-console.log(copy === original); // false
 ```
-
-## Deep Clone Implementations
 
 ### Recursive Approach
 
-The recursive approach is straightforward and easier to understand. It uses recursion to traverse and copy all nested objects and arrays.
+```javascript
+const original = { /* your complex object here */ };
+const cloned = deepCloneRecursive(original);
+```
 
 ### Non-recursive Approach
 
-The non-recursive approach avoids stack overflow by using a stack to simulate recursion. It is more complex but can handle very large and deeply nested objects more efficiently.
+```javascript
+const original = { /* your complex object here */ };
+const cloned = deepClone(original);
+```
 
-## Running Jest Tests
+Both functions will return a deep clone of the input object.
 
-This repository includes comprehensive Jest unit tests to ensure that both deep cloning functions work correctly. To run the tests, use the following command:
+## Implementation Details
 
-```bash
+### Recursive Approach (`deepCloneRecursive`)
+
+This function uses recursion to traverse the object structure. It's simpler to understand but may hit stack size limits for very deeply nested objects.
+
+### Non-recursive Approach (`deepClone`)
+
+This function uses an iterative approach with a stack to avoid recursion. It's more complex but can handle arbitrarily deep object structures without stack overflow issues.
+
+## Testing
+
+The project includes a comprehensive test suite in `deepClone.test.js`. To run the tests, make sure you have Jest installed and run:
+
+```
 npm test
 ```
 
-You can also run the tests with coverage:
-
-```bash
-npm test -- --coverage
-```
-
-## Test Coverage
-
-The Jest tests cover the following scenarios:
-
-- Primitive types (numbers, strings, null, etc.)
-- Arrays
-- Plain objects
-- Special objects (`Date`, `RegExp`, `Map`, `Set`)
+The tests cover various scenarios including:
+- Primitive types
+- Complex nested objects
 - Circular references
-- Objects with `Symbol` keys
-- Non-enumerable properties
+- Special object types (Date, RegExp, Map, Set)
+- Objects with Symbol keys
 - Prototype chain preservation
+
+## Limitations
+
+- Functions are not cloned; they are referenced in the cloned object.
+- Does not support cloning of other specialized built-in objects like WeakMap, WeakSet, etc.
+- May not correctly handle non-standard objects or those with custom [Symbol.toStringTag] implementations.
 
 ## Contributing
 
-Contributions are welcome! If you have suggestions or improvements, feel free to open an issue or submit a pull request.
+Feel free to submit issues or pull requests if you find any bugs or have suggestions for improvements.
 
 ## License
 
